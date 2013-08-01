@@ -1,0 +1,23 @@
+head
+  title #{@title || 'Paste'}
+  script src="/vendor/jquery-1.9.1.min.js"
+  script src="/vendor/bootstrap/js/bootstrap.min.js"
+  script src="/vendor/highlight.js/highlight.pack.js"
+  link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css"
+  link rel="stylesheet" href="/vendor/highlight.js/styles/monokai.css"
+  link rel="stylesheet" href="/css/main.css"
+  javascript: hljs.initHighlightingOnLoad()
+body style="padding-top: 50px;"
+  div class="navbar navbar-fixed-top"
+    div class="navbar-inner"
+      div class="container"
+        a class="brand" href="/" Paste
+        ul class="nav"
+          li
+            a href="/" New
+  div class="container"
+    - if @success
+      div class="alert alert-success" #{@success}
+    - if @error
+      div class="alert alert-error" #{@error}
+    == yield

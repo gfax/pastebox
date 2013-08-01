@@ -1,0 +1,9 @@
+div class="snippet"
+  h2 Paste a new snippet below:
+  form action="/" method="POST"
+    input type="hidden" name="id" value="#{@snippet.id if @snippet}"
+    p Title:
+    input type="text" name="snippet_title" class="input-xxlarge" size="64" maxlength="64" value="#{@snippet.title if @snippet}"
+    textarea name="snippet_body" id="snippet_body" class="span12" rows="20" #{@snippet.body if @snippet}
+    br
+    input type="submit" value="Save" class="btn"

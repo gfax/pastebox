@@ -1,0 +1,76 @@
+ruby:
+  langs = {
+    'bash'        => 'Bash',
+    'brainfuck'   => 'Brainf--k',
+    'css'         => 'CSS',
+    'cpp'         => 'C++',
+    'cs'          => 'C#',
+    'd'           => 'D',
+    'diff'        => 'Diff',
+    'http'        => 'HTTP',
+    'ini'         => 'Ini',
+    'java'        => 'Java',
+    'javacript'   => 'Javascript',
+    'json'        => 'JSON',
+    'lisp'        => 'Lisp',
+    'lua'         => 'Lua',
+    'markdown'    => 'Markdown',
+    'nginx'       => 'Nginx',
+    'objectivec'  => 'Objective-C',
+    'perl'        => 'Perl',
+    'php'         => 'PHP',
+    'python'      => 'Python',
+    'ruby'        => 'Ruby',
+    'sql'         => 'SQL',
+    'xml'         => 'XML/HTML'
+  }
+div class="snippet"
+  javascript:
+    function language(language) {
+      document.getElementById('lang').value = language;
+      document.forms[0].submit();
+    }
+    function saveLang(language) {
+      document.getElementById('lang').value = language;
+      document.getElementById('save').value = 'true';
+      document.forms[0].submit();
+    }
+    $(document).ready(function() {
+         $('pre code').each(function(i, e) {hljs.highlightBlock(e)});
+    });
+  h2 #{HTMLEntities.new.encode @snippet.title}
+  - if (@snippet.lang.nil? && !@lang.nil?) || (!@lang.nil? && @lang != @snippet.lang)
+      div class="alert alert-warning"
+        | The display language has been changed. If you would like to display the snippet in this language in the future, click save in the toolbar.
+  form action="/#{@snippet.id}" method="POST"
+    input type="hidden" name="lang" id="lang" value=""
+    input type="hidden" name="save" id="save" value=""
+  div class="navbar toolbar"
+    div class="navbar-inner"
+      div class="container"
+        ul class="nav"
+          li
+            a href="/edit/#{@snippet.id}" Edit
+          li
+            a href="/raw/#{@snippet.id}" target="_blank" Raw
+          li
+            a href="#" onClick="language('#{@lang == "no-highlight" ? "" : "no-highlight" }')" Toggle Highlighting
+          li class="dropdown"
+            a class="dropdown-toggle" data-toggle="dropdown" href="#" Language 
+            ul class="dropdown-menu"
+              - for item in langs do
+                  li
+                    a href="#" onClick="language('#{item[0]}')" #{item[1]}
+          - if (@snippet.lang.nil? && !@lang.nil?) || (!@lang.nil? && @lang != @snippet.lang)
+            li
+              a href="#" onClick="saveLang('#{@lang}')" Save
+        ul class="nav pull-right"
+          li
+            a href="/delete/#{@snippet.id}" Delete
+  div
+    p Language: #{langs[@lang] || langs[@snippet.lang] || 'Auto detected'}
+  div
+    pre
+      code class="#{@lang || @snippet.lang}" #{@snippet.body}
+  div
+    p Created on #{@snippet.created_at.strftime("%D at %T %Z")}
