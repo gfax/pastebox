@@ -6,8 +6,7 @@ require 'dm-migrations'
 require 'htmlentities'
 require 'slim'
 
-DataMapper.setup(:default, "sqlite3:///paste.sqlite3")
-
+DataMapper.setup(:default, "sqlite3:///" + File.dirname(__FILE__) +  "/paste.sqlite3")
  
 class Snippet
   include DataMapper::Resource
